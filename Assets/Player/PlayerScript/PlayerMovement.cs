@@ -23,11 +23,11 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Move the player to target point 
-        transform.position = Vector3.MoveTowards(transform.position, movePoint.position, moveSpeed * Time.deltaTime);
+        //Move the player to target point (Added offset since movePoint is not at player origins (.5,.5,0))
+        transform.position = Vector3.MoveTowards(transform.position, movePoint.position - new Vector3(.5f, .5f, 0), moveSpeed * Time.deltaTime);
 
         //Prevent the Player and movePoint to registrer movement input if the player is not yet at the movePoint
-        if (Vector3.Distance(transform.position, movePoint.position) <= .05f)
+        if (Vector3.Distance(transform.position, movePoint.position - new Vector3(.5f, .5f, 0)) <= .05f)//Added offset since movePoint is not at player origins (.5,.5,0)
         {
 
             if (Mathf.Abs(Input.GetAxisRaw("Horizontal")) == 1f)//Check for X axis input
