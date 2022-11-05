@@ -16,7 +16,7 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
 
-        movePoint.parent = null; //unparenting the target point so it not moving when the player move towards it
+        movePoint.parent = null; //unparenting the target point so it's not moving when the player move towards it
 
     }
 
@@ -26,8 +26,10 @@ public class PlayerMovement : MonoBehaviour
         //Move the player to target point (Added offset since movePoint is not at player origins (0,.25,0))
         transform.position = Vector3.MoveTowards(transform.position, movePoint.position - new Vector3(0, .25f, 0), moveSpeed * Time.deltaTime);
 
-        //All value are halved for the Y axis because of the isometric grid 
-        //Prevent the Player and movePoint to registrer movement input if the player is not yet at the movePoint
+        //movePoint is at the center of the player so the value for X and Y axis are halved (1 --> .5)
+        //Then for the collision check value are halved once again, because the collider is at the border of the tile not the center (.5 --> .25)
+        //Finally the value for the Y axis are halved one last time because of the isometric grid (Isometric Z as Y) properties (.25 --> .125)
+        //Prevent the Player and movePoint to registrer movements inputs if the player is not yet at the movePoint
         if (Vector3.Distance(transform.position, movePoint.position - new Vector3(0, .25f, 0)) <= .02f)//Added offset since movePoint is not at player origins (0,.25,0)
         {
 
